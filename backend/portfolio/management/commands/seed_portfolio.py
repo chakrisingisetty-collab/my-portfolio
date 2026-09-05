@@ -57,6 +57,8 @@ class Command(BaseCommand):
         profile.figma_url = "https://figma.com"
         profile.twitter_url = "https://twitter.com"
         profile.dribbble_url = "https://dribbble.com"
+        if not profile.avatar:
+            profile.avatar = "profile/avatar.jpg"
         profile.save()
         self.stdout.write(self.style.SUCCESS("Seeded Site Profile"))
 

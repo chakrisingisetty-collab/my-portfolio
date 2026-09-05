@@ -23,6 +23,8 @@ export const AdminSettings = () => {
     resume_url: '',
   });
 
+  const [avatarPreview, setAvatarPreview] = useState('');
+  const [avatarFile, setAvatarFile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
 
@@ -49,6 +51,9 @@ export const AdminSettings = () => {
           dribbble_url: p.dribbble_url || '',
           resume_url: p.resume_url || '',
         });
+        if (p.avatar) {
+          setAvatarPreview(p.avatar);
+        }
       } catch (err) {
         console.error('Failed to load settings:', err);
         error('Failed to load profile settings.');
@@ -67,8 +72,14 @@ export const AdminSettings = () => {
       Object.keys(formData).forEach((key) => {
         data.append(key, formData[key]);
       });
+      if (avatarFile) {
+        data.append('avatar', avatarFile);
+      }
 
-      await portfolioApi.updateAdminProfile(data);
+      const res = await portfolioApi.updateAdminProfile(data);
+      if (res.data?.avatar) {
+        setAvatarPreview(res.data.avatar);
+      }
       success('Portfolio settings and profile saved successfully!');
     } catch (err) {
       console.error('Failed to save profile settings:', err);
@@ -129,6 +140,45 @@ export const AdminSettings = () => {
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 className="w-full px-4 py-2.5 rounded-xl bg-[#181920] border border-white/10 text-white text-xs focus:outline-none focus:border-indigo-500"
               />
+            </div>
+          </div>
+
+          {/* Profile Photo / Avatar */}
+          <div className="pt-2 border-t border-white/5">
+            <label className="block text-xs font-medium text-slate-300 mb-1.5">
+              Profile Photo / Portrait (Featured in About Section)
+            </label>
+            <div className="flex items-center gap-5">
+              <div className="w-16 h-20 rounded-xl overflow-hidden border border-white/10 bg-[#181920] shrink-0 relative shadow-md">
+                {avatarPreview ? (
+                  <img
+                    src={avatarPreview}
+                    alt="Preview"
+                    className="w-full h-full object-cover object-center"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-slate-500">
+                    <User className="w-6 h-6" />
+                  </div>
+                )}
+              </div>
+              <div className="flex-1">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (file) {
+                      setAvatarFile(file);
+                      setAvatarPreview(URL.createObjectURL(file));
+                    }
+                  }}
+                  className="block w-full text-xs text-slate-400 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-white/5 file:text-indigo-300 hover:file:bg-white/10 file:cursor-pointer transition-colors"
+                />
+                <p className="text-[11px] text-slate-500 mt-1">
+                  Supports high-resolution vertical portrait images (.jpg, .png, .webp).
+                </p>
+              </div>
             </div>
           </div>
 
