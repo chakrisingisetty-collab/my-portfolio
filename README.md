@@ -19,12 +19,13 @@ You can add, edit, and delete projects, case studies, career experience, educati
 
 Both the backend and frontend dev servers are currently pre-configured and running.
 
-### Default Admin Credentials
+### Admin CMS Access
 - **URL**: [http://localhost:5173/admin](http://localhost:5173/admin)
-- **Username**: `admin`
-- **Password**: `admin123456`
-
-*(A "Fill default credentials" button is also provided on the login page for convenience)*
+- To create or manage an administrator account:
+  ```powershell
+  cd backend
+  .\venv\Scripts\python.exe manage.py createsuperuser
+  ```
 
 ---
 
@@ -86,15 +87,21 @@ The portfolio will be live at `http://localhost:5173/`.
 ### Backend (`backend/.env`)
 ```ini
 DEBUG=True
-SECRET_KEY=django-insecure-portfolio-super-secret-key
+SECRET_KEY=your-django-secret-key-here
 ALLOWED_HOSTS=localhost,127.0.0.1
 CORS_ALLOWED_ORIGINS=http://localhost:5173,http://127.0.0.1:5173
 
 # Optional: Connect to PostgreSQL
-# DATABASE_URL=postgres://user:password@localhost:5432/portfolio_db
+# DATABASE_URL=postgres://user:your_password@localhost:5432/portfolio_db
 
 # Optional: Connect to Cloudinary
 # CLOUDINARY_CLOUD_NAME=your_cloud_name
 # CLOUDINARY_API_KEY=your_api_key
 # CLOUDINARY_API_SECRET=your_api_secret
+```
+
+### Frontend (`frontend/.env`)
+```ini
+# Optional: Configure in production if frontend and backend are on different domains
+# VITE_API_URL=https://your-backend-api-domain.com
 ```

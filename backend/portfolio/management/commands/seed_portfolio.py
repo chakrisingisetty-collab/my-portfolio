@@ -1,3 +1,4 @@
+import os
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from portfolio.models import (
@@ -12,20 +13,26 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.stdout.write("Starting database seeding...")
 
-        # 1. Superuser
-        username = "admin"
-        password = "admin123456"
-        email = "admin@portfolio.local"
-        if not User.objects.filter(username=username).exists():
-            User.objects.create_superuser(username=username, email=email, password=password)
-            self.stdout.write(self.style.SUCCESS(f"Created superuser '{username}' with password '{password}'"))
+        # 1. Superuser (configurable via environment variables)
+        username = os.getenv("DJANGO_SUPERUSER_USERNAME")
+        password = os.getenv("DJANGO_SUPERUSER_PASSWORD")
+        email = os.getenv("DJANGO_SUPERUSER_EMAIL", "admin@example.com")
+        if username and password:
+            if not User.objects.filter(username=username).exists():
+                User.objects.create_superuser(username=username, email=email, password=password)
+                self.stdout.write(self.style.SUCCESS(f"Created superuser '{username}'"))
+            else:
+                u = User.objects.get(username=username)
+                u.set_password(password)
+                u.is_staff = True
+                u.is_superuser = True
+                u.save()
+                self.stdout.write(self.style.SUCCESS(f"Updated password for superuser '{username}'"))
         else:
-            u = User.objects.get(username=username)
-            u.set_password(password)
-            u.is_staff = True
-            u.is_superuser = True
-            u.save()
-            self.stdout.write(self.style.SUCCESS(f"Updated password for '{username}'"))
+            self.stdout.write(self.style.NOTICE(
+                "Superuser creation skipped. Set DJANGO_SUPERUSER_USERNAME and DJANGO_SUPERUSER_PASSWORD environment variables, "
+                "or run 'python manage.py createsuperuser' to create an admin account."
+            ))
 
         # 2. Site Profile
         profile, created = SiteProfile.objects.get_or_create(id=1)

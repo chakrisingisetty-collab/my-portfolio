@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useToast } from '../../context/ToastContext';
-import { Shield, Lock, User, ArrowRight, Loader2, KeyRound } from 'lucide-react';
+import { Shield, Lock, User, ArrowRight, Loader2 } from 'lucide-react';
 
 export const AdminLogin = () => {
   const [username, setUsername] = useState('');
@@ -16,11 +16,6 @@ export const AdminLogin = () => {
   const location = useLocation();
 
   const from = location.state?.from?.pathname || '/admin';
-
-  const handleFillDemo = () => {
-    setUsername('admin');
-    setPassword('admin123456');
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,7 +91,7 @@ export const AdminLogin = () => {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="admin"
+                  placeholder="Enter your username"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#181920] border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
                 />
               </div>
@@ -140,17 +135,6 @@ export const AdminLogin = () => {
             </button>
           </form>
 
-          {/* Quick Credential Helper Pill */}
-          <div className="mt-6 pt-6 border-t border-white/5 text-center">
-            <button
-              type="button"
-              onClick={handleFillDemo}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white text-xs font-mono transition-all"
-            >
-              <KeyRound className="w-3 h-3 text-indigo-400" />
-              <span>Fill default credentials (admin / admin123456)</span>
-            </button>
-          </div>
         </div>
       </div>
     </div>
