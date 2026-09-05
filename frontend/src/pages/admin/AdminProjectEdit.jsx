@@ -5,8 +5,7 @@ import { useToast } from '../../context/ToastContext';
 import { ConfirmModal } from '../../components/common/ConfirmModal';
 import {
   ArrowLeft, Save, Plus, Trash2, Edit3, Image as ImageIcon,
-  Upload, Check, X, Layers, ExternalLink, Star, FileText,
-  Loader2, AlertCircle, Eye
+  Upload, X, Layers, FileText, Loader2, Eye
 } from 'lucide-react';
 
 const SECTION_TYPE_OPTIONS = [
@@ -270,9 +269,10 @@ export const AdminProjectEdit = () => {
 
   const confirmDeleteSection = async () => {
     if (!deleteSectionTarget) return;
+    const target = deleteSectionTarget;
     try {
-      await portfolioApi.deleteAdminSection(deleteSectionTarget.id);
-      setSections(sections.filter(s => s.id !== deleteSectionTarget.id));
+      await portfolioApi.deleteAdminSection(target.id);
+      setSections(prev => prev.filter(s => s.id !== target.id));
       success('Section deleted.');
       setDeleteSectionTarget(null);
     } catch (err) {
@@ -316,9 +316,10 @@ export const AdminProjectEdit = () => {
 
   const confirmDeleteGallery = async () => {
     if (!deleteGalleryTarget) return;
+    const target = deleteGalleryTarget;
     try {
-      await portfolioApi.deleteAdminGalleryImage(deleteGalleryTarget.id);
-      setGalleryImages(galleryImages.filter(g => g.id !== deleteGalleryTarget.id));
+      await portfolioApi.deleteAdminGalleryImage(target.id);
+      setGalleryImages(prev => prev.filter(g => g.id !== target.id));
       success('Gallery image deleted.');
       setDeleteGalleryTarget(null);
     } catch (err) {

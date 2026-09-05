@@ -3,8 +3,7 @@ import { portfolioApi } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { ConfirmModal } from '../../components/common/ConfirmModal';
 import {
-  MessageSquare, Mail, Calendar, Trash2,
-  CheckCircle, CheckCircle2, Clock, Loader2
+  MessageSquare, Mail, Trash2, CheckCircle2, Loader2
 } from 'lucide-react';
 
 export const AdminMessages = () => {
@@ -45,9 +44,10 @@ export const AdminMessages = () => {
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
+    const target = deleteTarget;
     try {
-      await portfolioApi.deleteInquiry(deleteTarget.id);
-      setInquiries(inquiries.filter(i => i.id !== deleteTarget.id));
+      await portfolioApi.deleteInquiry(target.id);
+      setInquiries(prev => prev.filter(i => i.id !== target.id));
       success('Inquiry deleted.');
       setDeleteTarget(null);
     } catch (err) {

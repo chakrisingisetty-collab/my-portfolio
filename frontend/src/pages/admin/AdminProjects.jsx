@@ -60,11 +60,12 @@ export const AdminProjects = () => {
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
+    const target = deleteTarget;
     setIsDeleting(true);
     try {
-      await portfolioApi.deleteAdminProject(deleteTarget.id);
-      setProjects(projects.filter(p => p.id !== deleteTarget.id));
-      success(`Project "${deleteTarget.title}" deleted successfully.`);
+      await portfolioApi.deleteAdminProject(target.id);
+      setProjects(prev => prev.filter(p => p.id !== target.id));
+      success(`Project "${target.title}" deleted successfully.`);
       setDeleteTarget(null);
     } catch (err) {
       console.error('Failed to delete project:', err);
@@ -75,8 +76,8 @@ export const AdminProjects = () => {
   };
 
   const filtered = projects.filter(p =>
-    p.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchTerm.toLowerCase())
+    (p.title || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (p.category || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

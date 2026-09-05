@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { portfolioApi } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import {
-  Save, User, Mail, Phone, MapPin, Globe,
-  FileText, Loader2, CheckCircle2
+  Save, User, Mail, Globe, Loader2
 } from 'lucide-react';
-import { Github, Linkedin, Figma, Twitter, Dribbble } from '../../components/common/BrandIcons';
 
 export const AdminSettings = () => {
   const [formData, setFormData] = useState({

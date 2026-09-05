@@ -38,10 +38,7 @@ export const ConfirmModal = ({ isOpen, onClose, onConfirm, title, message, confi
           </button>
           <button
             type="button"
-            onClick={() => {
-              onConfirm();
-              onClose();
-            }}
+            onClick={onConfirm}
             className={`px-4 py-2 text-sm font-medium rounded-xl transition-all shadow-lg ${
               isDestructive
                 ? 'bg-rose-600 hover:bg-rose-500 text-white shadow-rose-900/30'

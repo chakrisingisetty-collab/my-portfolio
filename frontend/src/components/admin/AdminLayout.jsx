@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import { AdminSidebar } from './AdminSidebar';
-import { Menu, Plus, ExternalLink, ShieldCheck } from 'lucide-react';
+import { Menu, Plus, ExternalLink } from 'lucide-react';
 
 export const AdminLayout = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);

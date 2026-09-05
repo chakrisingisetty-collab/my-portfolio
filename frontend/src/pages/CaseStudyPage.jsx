@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { portfolioApi } from '../services/api';
 import { Navbar } from '../components/common/Navbar';
 import { Footer } from '../components/common/Footer';
 import {
-  ArrowLeft, ExternalLink, Calendar, Layers,
-  CheckCircle2, Sparkles, AlertCircle, Compass, Users, Layout,
-  Sliders, Award, ChevronRight, Loader2
+  ArrowLeft, ExternalLink, Calendar,
+  Sparkles, AlertCircle, Compass, Users, Layout,
+  Sliders, Award, Loader2
 } from 'lucide-react';
 import { Github, Figma } from '../components/common/BrandIcons';
 
 export const CaseStudyPage = () => {
   const { slug } = useParams();
-  const navigate = useNavigate();
   const [project, setProject] = useState(null);
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeSectionId, setActiveSectionId] = useState('');
 
   useEffect(() => {
     window.scrollTo(0, 0);

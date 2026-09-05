@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { portfolioApi } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { ConfirmModal } from '../../components/common/ConfirmModal';
-import { Plus, Edit3, Trash2, Sparkles, X, Loader2 } from 'lucide-react';
+import { Plus, Edit3, Trash2, X, Loader2 } from 'lucide-react';
 import * as Icons from 'lucide-react';
 
 const CATEGORIES = [

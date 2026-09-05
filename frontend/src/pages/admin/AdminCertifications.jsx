@@ -87,9 +87,10 @@ export const AdminCertifications = () => {
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
+    const target = deleteTarget;
     try {
-      await portfolioApi.deleteCertification(deleteTarget.id);
-      setCertifications(certifications.filter(c => c.id !== deleteTarget.id));
+      await portfolioApi.deleteCertification(target.id);
+      setCertifications(prev => prev.filter(c => c.id !== target.id));
       success('Certification deleted.');
       setDeleteTarget(null);
     } catch (err) {

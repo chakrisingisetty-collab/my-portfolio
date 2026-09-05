@@ -4,7 +4,7 @@ import { portfolioApi } from '../../services/api';
 import {
   FolderGit2, CheckCircle2, FileEdit, Briefcase,
   Award, MessageSquare, Image as ImageIcon, Plus,
-  ArrowRight, Sparkles, Clock, Loader2, ExternalLink
+  ArrowRight, Clock, Loader2, ExternalLink
 } from 'lucide-react';
 
 export const AdminDashboard = () => {

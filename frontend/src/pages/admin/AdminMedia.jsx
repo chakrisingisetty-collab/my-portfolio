@@ -4,7 +4,7 @@ import { useToast } from '../../context/ToastContext';
 import { ConfirmModal } from '../../components/common/ConfirmModal';
 import {
   UploadCloud, Copy, Check, Trash2, Eye,
-  FileImage, Search, X, Loader2, HardDrive
+  FileImage, Search, X, Loader2
 } from 'lucide-react';
 
 export const AdminMedia = () => {
@@ -66,9 +66,10 @@ export const AdminMedia = () => {
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
+    const target = deleteTarget;
     try {
-      await portfolioApi.deleteAdminMedia(deleteTarget.id);
-      setMediaItems(mediaItems.filter(m => m.id !== deleteTarget.id));
+      await portfolioApi.deleteAdminMedia(target.id);
+      setMediaItems(prev => prev.filter(m => m.id !== target.id));
       success('Media asset removed.');
       setDeleteTarget(null);
     } catch (err) {
@@ -86,7 +87,7 @@ export const AdminMedia = () => {
   };
 
   const filtered = mediaItems.filter(m =>
-    m.name.toLowerCase().includes(searchTerm.toLowerCase())
+    (m.name || '').toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

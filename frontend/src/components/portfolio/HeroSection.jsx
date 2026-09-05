@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ArrowDown, ArrowUpRight, FileDown, Sparkles } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, FileDown } from 'lucide-react';
 import { Github, Linkedin, Figma, Twitter, Dribbble } from '../common/BrandIcons';
 
 export const HeroSection = ({ profile }) => {
@@ -121,6 +121,17 @@ export const HeroSection = ({ profile }) => {
               title="LinkedIn"
             >
               <Linkedin className="w-4 h-4" />
+            </a>
+          )}
+          {profile?.twitter_url && (
+            <a
+              href={profile.twitter_url}
+              target="_blank"
+              rel="noreferrer"
+              className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-slate-400 hover:text-white transition-all hover:scale-110"
+              title="Twitter / X"
+            >
+              <Twitter className="w-4 h-4" />
             </a>
           )}
           {profile?.dribbble_url && (

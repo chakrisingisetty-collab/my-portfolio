@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { portfolioApi } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { ConfirmModal } from '../../components/common/ConfirmModal';
-import { Plus, Edit3, Trash2, Calendar, MapPin, Briefcase, X, Loader2 } from 'lucide-react';
+import { Plus, Edit3, Trash2, Briefcase, X, Loader2 } from 'lucide-react';
 
 export const AdminExperience = () => {
   const [experience, setExperience] = useState([]);
@@ -96,9 +96,10 @@ export const AdminExperience = () => {
 
   const confirmDelete = async () => {
     if (!deleteTarget) return;
+    const target = deleteTarget;
     try {
-      await portfolioApi.deleteExperience(deleteTarget.id);
-      setExperience(experience.filter(e => e.id !== deleteTarget.id));
+      await portfolioApi.deleteExperience(target.id);
+      setExperience(prev => prev.filter(e => e.id !== target.id));
       success('Experience entry deleted.');
       setDeleteTarget(null);
     } catch (err) {
