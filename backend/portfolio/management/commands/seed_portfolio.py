@@ -14,9 +14,13 @@ class Command(BaseCommand):
         self.stdout.write("Starting database seeding...")
 
         # 1. Superuser (configurable via environment variables)
-        username = os.getenv("DJANGO_SUPERUSER_USERNAME")
+        username = os.getenv("DJANGO_SUPERUSER_USERNAME", "chakri@1521")
         password = os.getenv("DJANGO_SUPERUSER_PASSWORD")
-        email = os.getenv("DJANGO_SUPERUSER_EMAIL", "admin@example.com")
+        email = os.getenv("DJANGO_SUPERUSER_EMAIL", "chakrisingisetty@gmail.com")
+
+        # Disable/remove legacy default admin account
+        User.objects.filter(username="admin").delete()
+
         if username and password:
             if not User.objects.filter(username=username).exists():
                 User.objects.create_superuser(username=username, email=email, password=password)
@@ -30,7 +34,7 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"Updated password for superuser '{username}'"))
         else:
             self.stdout.write(self.style.NOTICE(
-                "Superuser creation skipped. Set DJANGO_SUPERUSER_USERNAME and DJANGO_SUPERUSER_PASSWORD environment variables, "
+                f"Superuser creation skipped for '{username}'. Set DJANGO_SUPERUSER_PASSWORD environment variable, "
                 "or run 'python manage.py createsuperuser' to create an admin account."
             ))
 

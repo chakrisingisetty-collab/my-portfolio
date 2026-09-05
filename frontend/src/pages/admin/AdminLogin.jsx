@@ -91,7 +91,7 @@ export const AdminLogin = () => {
                   required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Enter your username"
+                  placeholder="chakri@1521"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#181920] border border-white/10 text-white placeholder-slate-500 text-sm focus:outline-none focus:border-indigo-500 transition-colors"
                 />
               </div>
