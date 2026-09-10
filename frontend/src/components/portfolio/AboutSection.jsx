@@ -3,6 +3,8 @@ import { SectionHeader } from '../common/SectionHeader';
 import { Layout, Code, Compass, Sparkles, MapPin } from 'lucide-react';
 import defaultProfilePhoto from '../../assets/profile.jpg';
 
+import { getMediaUrl } from '../../services/api';
+
 export const AboutSection = ({ profile }) => {
   const pillars = [
     {
@@ -23,7 +25,7 @@ export const AboutSection = ({ profile }) => {
   ];
 
   const photoSrc = profile?.avatar
-    ? (profile.avatar.startsWith('http') ? profile.avatar : (profile.avatar.startsWith('/') ? profile.avatar : `/${profile.avatar}`))
+    ? getMediaUrl(profile.avatar)
     : defaultProfilePhoto;
 
   return (

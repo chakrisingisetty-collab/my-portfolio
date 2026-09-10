@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { portfolioApi } from '../../services/api';
+import { portfolioApi, getMediaUrl } from '../../services/api';
 import { useToast } from '../../context/ToastContext';
 import { ConfirmModal } from '../../components/common/ConfirmModal';
 import {
@@ -136,7 +136,7 @@ export const AdminProjects = () => {
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-9 rounded-lg bg-[#1a1c24] border border-white/10 overflow-hidden shrink-0 flex items-center justify-center">
                           {proj.thumbnail ? (
-                            <img src={proj.thumbnail} alt={proj.title} className="w-full h-full object-cover" />
+                            <img src={getMediaUrl(proj.thumbnail)} alt={proj.title} className="w-full h-full object-cover" />
                           ) : (
                             <Layers className="w-4 h-4 text-slate-600" />
                           )}

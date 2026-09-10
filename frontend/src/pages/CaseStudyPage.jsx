@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { portfolioApi } from '../services/api';
+import { portfolioApi, getMediaUrl } from '../services/api';
 import { Navbar } from '../components/common/Navbar';
 import { Footer } from '../components/common/Footer';
 import {
@@ -195,7 +195,7 @@ export const CaseStudyPage = () => {
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
             <div className="rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#121318] aspect-video">
               <img
-                src={project.thumbnail}
+                src={getMediaUrl(project.thumbnail)}
                 alt={project.title}
                 className="w-full h-full object-cover"
               />
@@ -261,7 +261,7 @@ export const CaseStudyPage = () => {
                   {section.image && (
                     <div className="mt-8 rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-black/40">
                       <img
-                        src={section.image}
+                        src={getMediaUrl(section.image)}
                         alt={section.title}
                         className="w-full h-auto object-cover max-h-[500px]"
                       />
@@ -280,7 +280,7 @@ export const CaseStudyPage = () => {
                     {project.gallery_images.map((gImg) => (
                       <div key={gImg.id} className="rounded-xl overflow-hidden border border-white/10 bg-black/30 group">
                         <img
-                          src={gImg.image}
+                          src={getMediaUrl(gImg.image)}
                           alt={gImg.caption || 'Project visual'}
                           className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-300"
                         />

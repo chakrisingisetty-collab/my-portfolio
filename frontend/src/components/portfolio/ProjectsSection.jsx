@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { SectionHeader } from '../common/SectionHeader';
 import { ExternalLink, ArrowRight, Star, Layers } from 'lucide-react';
 import { Github, Figma } from '../common/BrandIcons';
+import { getMediaUrl } from '../../services/api';
 
 export const ProjectsSection = ({ projects = [] }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -50,7 +51,7 @@ export const ProjectsSection = ({ projects = [] }) => {
               <div className="relative aspect-video bg-[#1a1c24] overflow-hidden border-b border-white/5">
                 {project.thumbnail ? (
                   <img
-                    src={project.thumbnail}
+                    src={getMediaUrl(project.thumbnail)}
                     alt={project.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
