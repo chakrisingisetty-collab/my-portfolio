@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowUp, Heart } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 import { Github, Linkedin, Twitter, Dribbble } from './BrandIcons';
 
 export const Footer = ({ profile }) => {

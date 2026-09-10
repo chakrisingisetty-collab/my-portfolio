@@ -1,6 +1,6 @@
 import React from 'react';
 import { SectionHeader } from '../common/SectionHeader';
-import { Briefcase, Calendar, MapPin } from 'lucide-react';
+import { Calendar, MapPin } from 'lucide-react';
 
 export const ExperienceSection = ({ experience = [] }) => {
   return (

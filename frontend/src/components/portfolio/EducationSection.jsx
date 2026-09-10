@@ -1,6 +1,6 @@
 import React from 'react';
 import { SectionHeader } from '../common/SectionHeader';
-import { GraduationCap, Calendar, BookOpen } from 'lucide-react';
+import { GraduationCap, Calendar } from 'lucide-react';
 
 export const EducationSection = ({ education = [] }) => {
   return (
