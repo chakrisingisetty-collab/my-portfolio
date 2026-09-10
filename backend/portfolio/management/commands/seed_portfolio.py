@@ -14,7 +14,7 @@ class Command(BaseCommand):
         self.stdout.write("Starting database seeding...")
 
         # 1. Superuser (configurable via environment variables)
-        username = os.getenv("DJANGO_SUPERUSER_USERNAME", "chakri@1521")
+        username = os.getenv("DJANGO_SUPERUSER_USERNAME", "chakri")
         password = os.getenv("DJANGO_SUPERUSER_PASSWORD")
         email = os.getenv("DJANGO_SUPERUSER_EMAIL", "chakrisingisetty@gmail.com")
 
