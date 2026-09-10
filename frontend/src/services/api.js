@@ -1,9 +1,26 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+// Normalize API base URL from Vite environment variable
+const rawEnvUrl = (import.meta.env.VITE_API_URL || '').trim().replace(/\/+$/, '');
+const API_BASE_URL = rawEnvUrl.endsWith('/api')
+  ? rawEnvUrl
+  : (rawEnvUrl ? `${rawEnvUrl}/api` : '/api');
+
+export const getApiBaseUrl = () => API_BASE_URL;
+
+// Helper to resolve media file paths (Cloudinary full URL or Django backend relative /media/)
+export const getMediaUrl = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  const backendRoot = rawEnvUrl.endsWith('/api') ? rawEnvUrl.slice(0, -4) : rawEnvUrl;
+  if (backendRoot) {
+    return `${backendRoot}${path.startsWith('/') ? path : `/${path}`}`;
+  }
+  return path.startsWith('/') ? path : `/${path}`;
+};
 
 const api = axios.create({
-  baseURL: API_BASE_URL ? `${API_BASE_URL}/api` : '/api',
+  baseURL: API_BASE_URL,
 });
 
 // Interceptor to add JWT token to all requests

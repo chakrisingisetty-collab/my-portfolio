@@ -32,7 +32,16 @@ export const AdminLogin = () => {
       navigate(from, { replace: true });
     } catch (err) {
       console.error('Login error:', err);
-      const msg = err.response?.data?.detail || 'Invalid username or password.';
+      let msg = 'Invalid username or password.';
+      if (err.response?.data?.detail) {
+        msg = err.response.data.detail;
+      } else if (err.response?.status === 404) {
+        msg = 'Authentication endpoint not found (404). Please verify VITE_API_URL.';
+      } else if (err.code === 'ERR_NETWORK' || !err.response) {
+        msg = 'Cannot connect to backend API server. Please check your connection or verify that the Render backend is awake.';
+      } else if (err.response?.status >= 500) {
+        msg = 'Backend server error (500). Please check backend server logs.';
+      }
       setErrorMessage(msg);
       error(msg);
     } finally {

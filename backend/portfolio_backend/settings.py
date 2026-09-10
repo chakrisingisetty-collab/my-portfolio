@@ -144,9 +144,19 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
+# Reverse proxy SSL header (crucial for Render/Vercel HTTPS detection)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # CORS Configuration
-cors_raw = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173')
+cors_raw = os.getenv('CORS_ALLOWED_ORIGINS', 'http://localhost:5173,http://127.0.0.1:5173,https://my-portfolio-frontend-chakri12.vercel.app')
 CORS_ALLOWED_ORIGINS = [origin.strip() for origin in cors_raw.split(',') if origin.strip()]
+if 'https://my-portfolio-frontend-chakri12.vercel.app' not in CORS_ALLOWED_ORIGINS:
+    CORS_ALLOWED_ORIGINS.append('https://my-portfolio-frontend-chakri12.vercel.app')
+
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https:\/\/.*\.vercel\.app$",
+    r"^https:\/\/.*\.onrender\.com$",
+]
 CORS_ALLOW_ALL_ORIGINS = os.getenv('CORS_ALLOW_ALL_ORIGINS', str(DEBUG)).lower() in ('true', '1')
 CORS_ALLOW_CREDENTIALS = True
 
@@ -156,12 +166,18 @@ if csrf_raw:
     CSRF_TRUSTED_ORIGINS = [origin.strip() for origin in csrf_raw.split(',') if origin.strip()]
 else:
     CSRF_TRUSTED_ORIGINS = [
-        origin if origin.startswith(('http://', 'https://')) else f"https://{origin}"
-        for origin in CORS_ALLOWED_ORIGINS
+        'https://*.vercel.app',
+        'https://*.onrender.com',
+        'https://my-portfolio-frontend-chakri12.vercel.app',
     ]
+    for origin in CORS_ALLOWED_ORIGINS:
+        norm = origin if origin.startswith(('http://', 'https://')) else f"https://{origin}"
+        if norm not in CSRF_TRUSTED_ORIGINS:
+            CSRF_TRUSTED_ORIGINS.append(norm)
 
 if RENDER_EXTERNAL_HOSTNAME:
     render_origin = f"https://{RENDER_EXTERNAL_HOSTNAME}"
     if render_origin not in CSRF_TRUSTED_ORIGINS:
         CSRF_TRUSTED_ORIGINS.append(render_origin)
+
 
